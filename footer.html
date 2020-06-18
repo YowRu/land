@@ -1,0 +1,171 @@
+<div class="display">
+   <a href="javascript:;" class="reservation">
+       <img src="img/icon/calendar.svg" alt="綠色漸層的日曆小圖示" longdesc="txt/title.txt">
+       <span>預約參觀</span>
+   </a>
+   <form action="" method="post" class="visit" onclick="return false">
+       <a href="javascript:;" class="close">
+           <p class="big">Ｘ</p>
+           <p class="small">CLOSE</p>
+       </a>
+       <div class="title">線上預約</div>
+       <div class="flex">
+           <label for="apply">申請人/單位</label>
+           <input type="text" id="apply" autocomplete="off" required/>
+       </div>
+       <div class="flex">
+           <label for="number">參觀人數</label>
+           <input type="text" id="number" autocomplete="off" required/>
+       </div>
+       <div class="flex">
+           <label for="datepicker">參觀日期</label>
+           <input type="text" id="datepicker" autocomplete="off" placeholder="▼" required />
+       </div>
+       <div class="flex">
+           <label for="time">參觀時間</label>
+           <div class="time">
+               <div class="top">
+                   <a href="javascript:;" id="time">▼</a>
+                   <input type="text" autocomplete="off" placeholder="▼" value="" required />
+               </div>
+               <div class="content">
+                  <p>
+                       <a href="javascript:;">09:00</a>
+                       <a href="javascript:;">09:30</a>
+                       <a href="javascript:;">10:00</a>
+                       <a href="javascript:;">10:30</a>
+                       <a href="javascript:;">11:00</a>
+                       <a href="javascript:;">11:30</a>
+                   </p>
+                   <p>
+                       <a href="javascript:;">14:00</a>
+                       <a href="javascript:;">14:30</a>
+                       <a href="javascript:;">15:00</a>
+                       <a href="javascript:;">15:30</a>
+                       <a href="javascript:;">16:00</a>
+                       <a href="javascript:;">16:30</a>
+                   </p>
+               </div>
+           </div>
+       </div>
+       <div class="flex">
+           <label for="name">聯絡人姓名</label>
+           <input type="text" id="name" autocomplete="off" required/>
+       </div>
+       <div class="flex">
+           <label for="phone">聯絡人手機</label>
+           <input type="text" autocomplete="off" id="phone" minlength="10" maxlength="10" placeholder="0988123456" required/>
+       </div>
+       <div class="flex">
+           <label for="email">聯絡人Email</label>
+           <input type="text" autocomplete="off" id="email" required/>
+       </div>
+       <div class="memo">
+           <p>備註事項</p>
+           <ul>
+               <li>
+                   <p>一. 開放時間</p>
+                   <p>gegthrthtrhr</p>
+               </li>
+               <li>
+                   <p>二. 開放時間</p>
+                   <p>gegthrthtrhr</p>
+               </li>
+           </ul>
+       </div>
+       <button type="submit" name="submit">確認送出</button>
+   </form>
+</div>
+<div class="footer">
+    <div class="row">
+        <img src="img/title.svg" alt="白色字體台灣土地改革陳列館圖片" longdesc="txt/title.txt">
+        <div>
+            <p>33058 桃園市桃園區中山路572之1號</p>
+            <p>+886-3-3323-529</p>
+        </div>
+        <img src="img/logo_W.png" alt="白色字體中華民國內政部地政司圖片" longdesc="txt/title.txt">
+    </div>
+    <p>Copyright@2020 中華民國內政部地政司 版權所有</p>
+</div>
+<script>
+  /*預約toggle*/
+    $('.reservation').click(function(){
+        $('footer .display').css('right','0');
+        $('footer .reservation').css('background-color','#C3A877');
+        $('footer .visit').show().css('right','0');
+
+    });
+    $('footer .display .close').click(function(){
+        $('footer .display').css('right','-500px');
+        $('footer .reservation').css('background-color','#E0D3BB');
+        $('footer .visit input').val('');
+        $('footer .visit').fadeOut();
+    })
+    /*預約時間*/
+    $('footer .visit .time .top #time').click(function(){
+        $('footer .visit .time .content').fadeToggle();
+    });
+    $('footer .visit .time .content p a').click(function(){
+        $(this).addClass('theTime');
+        $(this).siblings('a').removeClass('theTime');
+        let finalTime=$(this).html();
+        $('footer .visit .time .top input').val(finalTime);
+        $('footer .visit .time .content').fadeOut();
+        $('footer .visit .time .top #time').html(finalTime);
+    });
+    /*tab choice time*/
+    $('footer .visit .time').focusin(function(){
+        $('footer .visit .time .content').fadeIn();
+    });
+    $('footer .visit .time .content p a').focusin(function(){
+        $(this).addClass('theTime');
+        $(this).siblings('a').removeClass('theTime');
+        $('.theTime').keyup(function(){
+          if (event.keyCode === 13) {
+             let finalTime = $('.theTime').html();
+             $('footer .visit .time .top input').val(finalTime);
+             $('footer .visit .time').blur();
+             $('footer .visit .time .top #time').html(finalTime);
+          }
+        });
+    });
+    $('footer .visit .time .content p a').blur(function(){
+        $(this).removeClass('theTime');
+    });
+    $('footer .visit #name').focusin(function(){
+        $('footer .visit .time .content').fadeOut();
+    });
+    /*date*/
+     $(function () {
+       $( "#datepicker" ).datepicker({format: 'YYYY/MM/DD'});
+    });
+    /*submit*/
+    $('.visit input[type="text"]').blur(function(){
+        if($(this).val() !== ''){
+           $(this).css("background-color","#fff");
+        }
+    });
+    $('button').click(function(){
+        if($("#apply").val() === ""){
+              $("#apply").focus().css("background-color","#FFFFCC").attr("placeholder", "請輸入申請人/單位");
+        }else if($("#number").val() === ""){
+              $("#number").focus().css("background-color","#FFFFCC").attr("placeholder","請輸入參觀人數");
+        }else if($("#datepicker").val() === ""){
+              $("#datepicker").focus().css("background-color","#FFFFCC").attr("placeholder", "請選擇參觀日期");
+        }else if($("#time input").val() === ""){
+              $("#time input").focus().css("background-color","#FFFFCC").attr("placeholder", "請選擇參觀時間  ▼");
+        }else if($("#name").val() === ""){
+              $("#name").focus().css("background-color","#FFFFCC").attr("placeholder", "請輸入聯絡人姓名");
+        }else if($("#phone").val() === "" || $("#phone").val().length !== 10){
+              $("#phone").focus().css("background-color","#FFFFCC").attr({
+                  "placeholder": "請輸入聯絡人手機",
+                  'minlength':'10',
+                  'maxlength':'10'
+              });
+        }else if($("#email").val() === ""){
+              $("#email").focus().css("background-color","#FFFFCC").attr("placeholder", "請輸入聯絡人Email");
+        }else{
+            self.location='success.html';
+        }
+    });
+</script>
