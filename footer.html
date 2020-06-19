@@ -90,17 +90,19 @@
 <script>
   /*預約toggle*/
     $('.reservation').click(function(){
-        $('footer .display').css('right','0');
+        $('footer .display').animate({'marginRight':500}, 800);
         $('footer .reservation').css('background-color','#C3A877');
-        $('footer .visit').show().css('right','0');
 
     });
     $('footer .display .close').click(function(){
-        $('footer .display').css('right','-500px');
-        $('footer .reservation').css('background-color','#E0D3BB');
         $('footer .visit input').val('');
-        $('footer .visit').fadeOut();
-    })
+        $('footer .display').animate({'marginRight':0}, 800);
+        function myFunction() {
+            setTimeout(function(){
+                $('footer .reservation').css('background-color','#E0D3BB');
+            }, 3000);
+        }
+    });
     /*預約時間*/
     $('footer .visit .time .top #time').click(function(){
         $('footer .visit .time .content').fadeToggle();
